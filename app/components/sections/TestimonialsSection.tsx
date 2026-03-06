@@ -167,7 +167,7 @@ export default function TestimonialsSection() {
           onMouseUp={handleMouseUp}
           onMouseLeave={() => setIsAutoPlay(true)}
         >
-          <div className="overflow-hidden">
+          <div className="overflow-hidden pb-3">
             <div
               className="flex transition-transform duration-700 ease-out"
               style={{
