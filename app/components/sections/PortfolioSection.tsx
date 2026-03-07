@@ -9,31 +9,37 @@ const lineSvg = "/images/waves-line.svg";
 
 const portfolioItems = [
   {
-    image: "/services/fractional.png",
+    image: "/services/fractional.webp",
     title: "Consultants and Coaches",
     description: "A clean page that drives discovery calls and consult bookings",
     templateUrl: "/fractional-ai-website-template",
   },
   {
-    image: "/services/hvac.png",
+    image: "/services/hvac.webp",
     title: "Home Services (HVAC/Plumbing)",
     description: "Quick \"call now,\" service areas, and quote requests",
     templateUrl: "/hvac-ai-website-template",
   },
   {
-    image: "/services/lawn.png",
+    image: "/services/lawn.webp",
     title: "Lawn Care and Landscaping",
     description: "Schedules, offerings, profiles, and membership-style sections",
     templateUrl: "/lawncare-ai-website-template",
   },
   {
-    image: "/services/cleaning.png",
+    image: "/services/moving.webp",
+    title: "Moving Services",
+    description: "Showcase your moving services, get quotes, and build trust with potential clients",
+    templateUrl: "/movers-ai-website-template",
+  },
+  {
+    image: "/services/cleaning.webp",
     title: "Cleaning Services",
     description: "Professional cleaning services with easy booking and service packages",
     templateUrl: "/cleaning-ai-website-template",
   },
   {
-    image: "/services/contractor.png",
+    image: "/services/contractor.webp",
     title: "General Contractors",
     description: "Showcase projects, get quotes, and build trust with potential clients",
     templateUrl: "/contractor-ai-website-template",
@@ -53,16 +59,13 @@ export default function PortfolioSection() {
   // Handle responsive items per view
   useEffect(() => {
     setMounted(true);
-    
+
     const handleResize = () => {
       if (window.innerWidth < 768) {
-        // Mobile: 1 slide
         setItemsPerView(1);
       } else if (window.innerWidth < 1024) {
-        // Tablet: 2 slides
         setItemsPerView(2);
       } else {
-        // Desktop: 3 slides
         setItemsPerView(3);
       }
     };
@@ -72,19 +75,16 @@ export default function PortfolioSection() {
     return () => window.removeEventListener("resize", handleResize);
   }, []);
 
-  // Create infinite carousel with items before and after
   const itemsToShow = portfolioItems.length;
   const infiniteItems = [
     ...portfolioItems.slice(-itemsPerView),
     ...portfolioItems,
     ...portfolioItems.slice(0, itemsPerView),
   ];
-  
-  // Start from the first "real" item
+
   const startIndex = itemsPerView;
 
   const handleTransitionEnd = useCallback(() => {
-    // Jump to the real item without transition
     if (currentSlide === 0) {
       innerRef.current!.style.transition = "none";
       setCurrentSlide(itemsToShow);
@@ -112,7 +112,6 @@ export default function PortfolioSection() {
     setCurrentSlide(startIndex + index);
   };
 
-  // Auto play effect
   useEffect(() => {
     if (!mounted || !isAutoPlay) return;
 
@@ -129,9 +128,8 @@ export default function PortfolioSection() {
         clearInterval(autoPlayRef.current);
       }
     };
-  }, [isAutoPlay]);
+  }, [isAutoPlay, mounted]);
 
-  // Handle infinite loop wrapping
   useEffect(() => {
     if (innerRef.current) {
       innerRef.current.addEventListener("transitionend", handleTransitionEnd);
@@ -141,7 +139,6 @@ export default function PortfolioSection() {
     }
   }, [handleTransitionEnd]);
 
-  // Handle touch start
   const handleTouchStart = (e: React.TouchEvent) => {
     if (e.targetTouches[0]) {
       setTouchStart(e.targetTouches[0].clientX);
@@ -149,52 +146,34 @@ export default function PortfolioSection() {
     }
   };
 
-  // Handle touch end
   const handleTouchEnd = (e: React.TouchEvent) => {
     if (e.changedTouches[0] && touchStart !== null) {
       const touchEndPos = e.changedTouches[0].clientX;
       const distance = touchStart - touchEndPos;
-      const isLeftSwipe = distance > 50;
-      const isRightSwipe = distance < -50;
-
-      if (isLeftSwipe) {
-        nextSlide();
-      } else if (isRightSwipe) {
-        prevSlide();
-      }
-
+      if (distance > 50) nextSlide();
+      else if (distance < -50) prevSlide();
       setTouchStart(null);
       setIsAutoPlay(true);
     }
   };
 
-  // Handle mouse down
   const handleMouseDown = (e: React.MouseEvent) => {
     setTouchStart(e.clientX);
     setIsAutoPlay(false);
   };
 
-  // Handle mouse up
   const handleMouseUp = (e: React.MouseEvent) => {
     if (touchStart !== null) {
-      const touchEndPos = e.clientX;
-      const distance = touchStart - touchEndPos;
-      const isLeftSwipe = distance > 50;
-      const isRightSwipe = distance < -50;
-
-      if (isLeftSwipe) {
-        nextSlide();
-      } else if (isRightSwipe) {
-        prevSlide();
-      }
-
+      const distance = touchStart - e.clientX;
+      if (distance > 50) nextSlide();
+      else if (distance < -50) prevSlide();
       setTouchStart(null);
       setIsAutoPlay(true);
     }
   };
 
-  // Get the actual slide index for dot indicators
-  const actualSlideIndex = ((currentSlide - startIndex) % itemsToShow + itemsToShow) % itemsToShow;
+  const actualSlideIndex =
+    ((currentSlide - startIndex) % itemsToShow + itemsToShow) % itemsToShow;
 
   return (
     <section className="relative w-full py-12 md:py-16 lg:py-20 bg-white">
@@ -205,17 +184,17 @@ export default function PortfolioSection() {
         <div className="flex flex-col items-center gap-3 max-w-[750px] mx-auto mb-12 md:mb-16">
           <Badge variant="outline">Portfolio</Badge>
           <h2 className="ff-jakarta font-bold text-[#000000] md:text-[40px] text-[36px] text-center leading-[100%] md:whitespace-nowrap">
-        Good-Looking Sites That Fit Your Business
+            Good-Looking Sites That Fit Your Business
           </h2>
           <p className="ff-Graphik font-normal text-[#1E293B] md:text-[20px] lg:text-xl text-base text-center md:leading-[30px] leading-[24px]">
-            These are not “one-size-fits-all” themes. They are made for service businesses so your site feels clear, trustworthy, and easy to use.
-
+            These are not "one-size-fits-all" themes. They are made for service
+            businesses so your site feels clear, trustworthy, and easy to use.
           </p>
         </div>
 
         <div className="relative">
           <div
-            className="overflow-hidden"
+            className="overflow-hidden pb-2"
             ref={carouselRef}
             onTouchStart={handleTouchStart}
             onTouchEnd={handleTouchEnd}
@@ -239,26 +218,32 @@ export default function PortfolioSection() {
                   <Card className="bg-gradient-to-br from-[#e8f7fb] to-[#d4f1f9] rounded-[30px] border-0 shadow-sm hover:shadow-md transition-shadow h-full group">
                     <CardContent className="p-4 md:p-6 lg:p-8 h-full flex flex-col justify-between">
                       <div>
-                        <div className="bg-[#f5f5f5] rounded-[15px] mb-4 md:mb-6 overflow-hidden relative h-[200px] md:h-[250px] lg:h-[300px]">
-                        <div className="absolute inset-0 overflow-hidden">
+                        {/* ── IMAGE CONTAINER ── */}
+                        <div className="rounded-[15px] mb-4 md:mb-6 overflow-hidden relative h-[200px] md:h-[250px] lg:h-[300px] bg-[#f5f5f5]">
                           <Image
                             src={item.image}
                             alt={item.title}
-                            className="w-full h-auto absolute top-0 left-0 ease-linear"
-                            height={100}
-                            width={100}
+                            fill
+                            sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 33vw"
+                            quality={90}
+                            className="object-cover object-top"
                             style={{
-                              transition: 'transform 5s linear'
+                              // GPU compositing — prevents sub-pixel blurring
+                              transform: "translateZ(0)",
+                              willChange: "transform",
+                              backfaceVisibility: "hidden",
+                              WebkitBackfaceVisibility: "hidden",
                             }}
                           />
                         </div>
-                      </div>
-                      <h3 className="ff-jakarta font-bold text-[#0E0E0F] text-lg lg:text-xl mb-3 leading-snug">
-                        {item.title}
-                      </h3>
-                      <p className="ff-Graphik font-normal text-[#1E293B] md:text-base mb-3 md:mb-4 leading-relaxed line-clamp-2">
-                        {item.description}
-                      </p>
+                        {/* ── /IMAGE CONTAINER ── */}
+
+                        <h3 className="ff-jakarta font-bold text-[#0E0E0F] text-lg lg:text-xl mb-3 leading-snug">
+                          {item.title}
+                        </h3>
+                        <p className="ff-Graphik font-normal text-[#1E293B] md:text-base mb-3 md:mb-4 leading-relaxed line-clamp-2">
+                          {item.description}
+                        </p>
                       </div>
                       <div className="flex gap-2 md:gap-3">
                         <Button
@@ -275,7 +260,9 @@ export default function PortfolioSection() {
                           className="flex-1 max-h-[42px] text-sm md:text-base"
                           asChild
                         >
-                          <a href="https://dashboard.oneupai.com/onboard">Build Mine</a>
+                          <a href="https://dashboard.oneupai.com/onboard">
+                            Build Mine
+                          </a>
                         </Button>
                       </div>
                     </CardContent>
@@ -284,46 +271,6 @@ export default function PortfolioSection() {
               ))}
             </div>
           </div>
-
-          {/* Navigation Arrows */}
-          {/* <button
-            onClick={prevSlide}
-            className="absolute left-0 top-1/2 -translate-y-1/2 -translate-x-4 md:-translate-x-6 w-10 h-10 rounded-full bg-white shadow-lg flex items-center justify-center hover:bg-gray-50 transition-colors z-10"
-            aria-label="Previous slide"
-          >
-            <svg
-              className="w-5 h-5 text-[#1a80e7]"
-              fill="none"
-              stroke="currentColor"
-              viewBox="0 0 24 24"
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth={2}
-                d="M15 19l-7-7 7-7"
-              />
-            </svg>
-          </button>
-          <button
-            onClick={nextSlide}
-            className="absolute right-0 top-1/2 -translate-y-1/2 translate-x-4 md:translate-x-6 w-10 h-10 rounded-full bg-white shadow-lg flex items-center justify-center hover:bg-gray-50 transition-colors z-10"
-            aria-label="Next slide"
-          >
-            <svg
-              className="w-5 h-5 text-[#1a80e7]"
-              fill="none"
-              stroke="currentColor"
-              viewBox="0 0 24 24"
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth={2}
-                d="M9 5l7 7-7 7"
-              />
-            </svg>
-          </button> */}
         </div>
 
         {/* Navigation Dots */}

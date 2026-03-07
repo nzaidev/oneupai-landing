@@ -125,7 +125,7 @@ export default function VideoSection() {
           <img src={chatSvg} className="w-full" alt="" />
         </div>
 
-        <div className="relative rounded-2xl lg:rounded-3xl overflow-hidden bg-gray-900 h-[220px] md:h-[500px] lg:h-[615px]">
+        <div className="relative rounded-2xl lg:rounded-3xl overflow-hidden bg-gray-900 aspect-video w-full ring-0 border-0 outline-none">
 
           {hasClicked ? (
             /**
@@ -140,7 +140,7 @@ export default function VideoSection() {
               frameBorder="0"
               allow="autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media; web-share"
               referrerPolicy="strict-origin-when-cross-origin"
-              className="absolute inset-0 w-full h-full"
+              className="absolute inset-0 w-full h-full bg-white"
               title={video.title}
             />
           ) : (

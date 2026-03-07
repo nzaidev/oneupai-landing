@@ -3,8 +3,8 @@ import { Button } from "../ui/button";
 const footerLinks = [
   { label: "Privacy Policy", href: "/privacy" },
   { label: "Terms", href: "/terms" },
-  { label: "Login", href: "#login" },
-  { label: "Agency Partners", href: "#agency-partners" },
+  { label: "Login", href: "https://dashboard.oneupai.com/onboard" },
+  // { label: "Agency Partners", href: "#agency-partners" },
 ];
 
 export default function FooterSection() {
@@ -12,11 +12,11 @@ export default function FooterSection() {
     <footer className="w-full bg-[#00244C] text-white">
       {/* CTA Section */}
       <div className="max-w-[1320px] mx-auto px-4 md:px-8 pt-16 md:pt-20 pb-12 md:pb-16">
-        <div className="flex flex-col items-center gap-6 md:gap-8 max-w-[800px] mx-auto text-center">
-          <h2 className="ff-jakarta font-bold text-[#ffffff] md:text-[40px] text-[36px] text-center leading-[100%] whitespace-nowrap">
+        <div className="flex flex-col items-center gap-6 md:gap-8  text-center">
+          <h2 className="ff-jakarta font-bold text-[#ffffff] max-w-[900px] mx-auto md:text-[40px] text-[36px] text-center leading-[120%]">
             Ready to Get More Bookings From Your Website?
           </h2>
-          <p className="ff-Graphik font-normal text-[#ffffff] md:text-[20px] lg:text-xl text-base text-center md:leading-[30px] leading-[24px]">
+          <p className="ff-Graphik font-normal text-[#ffffff] max-w-[800px] mx-auto md:text-[20px] lg:text-xl text-base text-center md:leading-[30px] leading-[24px]">
             Stop sending people to a page that does not convert. Launch your site today and let it bring you leads day and night.
           </p>
           <Button variant='primary' size='md' asChild>
@@ -31,7 +31,9 @@ export default function FooterSection() {
           <div className="flex flex-col md:flex-row items-center justify-between gap-6">
             {/* Logo */}
             <div className="flex items-center gap-2">
+              <a href="/">
               <img src="/images/white.png" alt="OneUpAI" className="h-20 w-auto" />
+              </a>
             </div>
 
             {/* Links */}

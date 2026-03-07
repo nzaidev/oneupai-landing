@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { Plus_Jakarta_Sans, Inter } from "next/font/google";
 import "./globals.css";
-import { WebinarPopUpProvider } from "./components/sections/WebinarPopupProvider";
+import { PopupProvider } from "./components/sections/PopupContext";
 
 const plusJakartaSans = Plus_Jakarta_Sans({
   subsets: ["latin"],
@@ -33,9 +33,9 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={`${plusJakartaSans.variable} ${inter.variable}`}>
-        <WebinarPopUpProvider>
+        <PopupProvider>
           {children}
-        </WebinarPopUpProvider>
+        </PopupProvider>
       </body>
     </html>
   );
